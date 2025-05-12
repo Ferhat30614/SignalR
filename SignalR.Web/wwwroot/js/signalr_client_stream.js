@@ -1,11 +1,9 @@
-﻿const { ConsoleLogger } = require("@microsoft/signalr/dist/esm/Utils");
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
 
 
 
 
-    const connection = new signalR.HubConnectionBuilder().withUrl("/exampleTypeSafeHubss")
+    const connection = new signalR.HubConnectionBuilder().withUrl("/exampleTypeSafeHub")
         .configureLogging(signalR.LogLevel.Information).build();
 
     async function start() {
@@ -25,8 +23,8 @@ $(document).ready(function () {
 
     }
 
-    connection.onclose(() => {
-        await start();
+    connection.onclose(async () => {
+         await  start();
     });
 
     start();
@@ -51,4 +49,4 @@ $(document).ready(function () {
 
 
 
-}
+})
