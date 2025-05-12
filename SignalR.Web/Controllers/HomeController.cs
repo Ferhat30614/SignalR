@@ -17,6 +17,10 @@ namespace SignalR.Web.Controllers
         {
             return View();
         }
+         public IActionResult Stream()
+         {
+            return View();
+         }
 
         public IActionResult Privacy()
         {

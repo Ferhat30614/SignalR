@@ -51,11 +51,6 @@ namespace SignalR.Web.Hubs
         }
 
 
-
-
-
-
-
         public override async Task OnConnectedAsync()
         {
             ConnectedClientCount++;
