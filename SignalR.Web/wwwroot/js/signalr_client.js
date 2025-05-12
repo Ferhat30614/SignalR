@@ -6,6 +6,33 @@
         .configureLogging(signalR.LogLevel.Information).build();
 
 
+
+
+    async function start() {
+
+        try {
+
+            await connection.start().then(() => {
+                $("#connectionId").html(`connectionId : ${connection.connectionId}`);
+                console.log("hub ile bağlantı kuruldu")
+            });
+
+        }
+        catch (err) {
+            console.error("hub ile bağlantı kurulamadı", err);
+            setTimeout(() => start(), 3000);
+        }
+
+    }
+
+    connection.onclose(async () => {
+        await start(); // bağlantı yeniden kurulana kadar bekliyorum aslında ben burda
+    });
+
+    start();
+
+
+
     const broadcastMessageToAllClientHubMethodCall = "BroadcastMessageToAllClient";
     const receiveMessageForAllClientClientMethodCall = "ReceiveMessageForAllClient";
 
@@ -118,22 +145,6 @@
     })                      
 
 
-    function start() {
-        connection.start().then(() => {
-
-            $("#connectionId").html(`connectionId : ${connection.connectionId}`);
-
-
-            console.log("hub ile bağlantı kuruldu")
-        });
-    }
-
-    try{
-        start();
-    }
-    catch {
-        setTimeout(() => start(),5000);
-    }
 
 
     const span_client_count = $("#span-connected-client-count"); //burda benim spanime eriştim bnu şekilde
