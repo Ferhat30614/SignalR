@@ -28,6 +28,12 @@ namespace SignalR.Web.Hubs
             await Clients.Client(connectionId).ReceiveMessageForIndividualClient(message);
         }
 
+        public async Task BroadcastStreamDataToAllClient(IAsyncEnumerable<string> nameAsChunks)
+        {
+            await foreach (var chunk in nameAsChunks) await Clients.All.ReceiveMessageAsStreamForAllClient(chunk); 
+
+        }
+
         public async Task BroadcastMessageToGroupClient(string groupName,string message)
         {
             await Clients.Group(groupName).ReceiveMessageForGroupClients(message);
