@@ -21,6 +21,10 @@ namespace SignalR.Web.Controllers
          {
             return View();
          }
+        public IActionResult APIHubContextExample()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
