@@ -11,14 +11,8 @@
     <script>
 
         $(document).ready(function () {
-
-
-
         const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7277/myhub")
             .configureLogging(signalR.LogLevel.Information).build();
-
-
-
 
         async function start() {
 
@@ -40,8 +34,24 @@
         connection.onclose(async () => {
             await start(); // bağlantı yeniden kurulana kadar bekliyorum aslında ben burda
         });
-
         start();
+
+
+        connection.on("ReceiveMessageForAllClient", (message) => {
+            console.log("Gelen mesaj(apiden)",message);
+        });
+
+
+        $("#btn").click(function () {
+            const message = "hello world";
+            connection.invoke("BroadcastMessageToAllClient",message)
+            console.log("mesaj Gönderildi");
+
+        });
+
+
+
+
 
 
 
@@ -53,4 +63,10 @@
 
 
 }
+
+
+
+<button class="btn btn-primary my-2" id="btn">  doğrudan hub ile</button>
+
+
 
