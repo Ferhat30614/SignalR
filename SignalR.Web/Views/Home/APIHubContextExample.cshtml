@@ -5,3 +5,52 @@
 
 <h1>APIHubContextExample</h1>
 
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+
+
+        const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7277/myhub")
+            .configureLogging(signalR.LogLevel.Information).build();
+
+
+
+
+        async function start() {
+
+            try {
+
+                await connection.start().then(() => {
+                    $("#connectionId").html(`connectionId : ${connection.connectionId}`);
+                    console.log("hub ile bağlantı kuruldu")
+                });
+
+            }
+            catch (err) {
+                console.error("hub ile bağlantı kurulamadı", err);
+                setTimeout(() => start(), 3000);
+            }
+
+        }
+
+        connection.onclose(async () => {
+            await start(); // bağlantı yeniden kurulana kadar bekliyorum aslında ben burda
+        });
+
+        start();
+
+
+
+        })
+
+
+
+    </script>
+
+
+}
+
