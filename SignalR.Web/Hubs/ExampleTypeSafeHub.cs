@@ -47,6 +47,16 @@ namespace SignalR.Web.Hubs
 
         }
 
+        public async IAsyncEnumerable<string> BroadcastFromHubToClient(int count)
+        {
+            foreach(var item in Enumerable.Range(1,count).ToList())
+            {
+                await Task.Delay(1000);
+                yield return $"{item}. eleman";   //yield keywordu aslında burda her bir item için returnu sağlar.
+            }
+            
+        }
+
         public async Task BroadcastMessageToGroupClient(string groupName,string message)
         {
             await Clients.Group(groupName).ReceiveMessageForGroupClients(message);

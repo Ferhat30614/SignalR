@@ -1,8 +1,6 @@
 ﻿$(document).ready(function () {
 
 
-
-
     const connection = new signalR.HubConnectionBuilder().withUrl("/exampleTypeSafeHub")
         .configureLogging(signalR.LogLevel.Information).build();
 
@@ -30,9 +28,10 @@
 
     const receiveMessageAsStreamForAllClient = "ReceiveMessageAsStreamForAllClient";
     const broadcastStreamDataToAllClient = "BroadcastStreamDataToAllClient";
-
     const broadcastStreamProductToAllClient = "BroadcastStreamProductToAllClient";
     const receiveProductAsStreamForAllClient = "ReceiveProductAsStreamForAllClient";
+
+    const broadcastFromHubToClient = "BroadcastFromHubToClient";
 
 
     connection.on(receiveMessageAsStreamForAllClient, (name) => {
@@ -83,19 +82,17 @@
 
         subject.complete();
 
+    })
+    $("#btn_FromHub_ToClient").click(function () {
+
+
+        connection.stream(broadcastFromHubToClient, 15).subscribe({
+            next: (message) => $("#streamBox").append(`<p>${message}</p>`)
+        });
+
+
 
     })
-
-
-
-
-
-
-
-
-
-
-
 
     start();
 
