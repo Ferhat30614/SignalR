@@ -30,7 +30,11 @@ namespace SignalR.Web.Hubs
 
         public async Task BroadcastStreamDataToAllClient(IAsyncEnumerable<string> nameAsChunks)
         {
-            await foreach (var chunk in nameAsChunks) await Clients.All.ReceiveMessageAsStreamForAllClient(chunk); 
+            await foreach (var chunk in nameAsChunks)
+            {
+                await Task.Delay(1000);
+                await Clients.All.ReceiveMessageAsStreamForAllClient(chunk);
+            }
 
         }
 
