@@ -37,6 +37,15 @@ namespace SignalR.Web.Hubs
             }
 
         }
+        public async Task BroadcastStreamProductToAllClient(IAsyncEnumerable<Product> productAsChunks)
+        {
+            await foreach (var chunk in productAsChunks)
+            {
+                await Task.Delay(1000);
+                await Clients.All.ReceiveProductAsStreamForAllClient(chunk);
+            }
+
+        }
 
         public async Task BroadcastMessageToGroupClient(string groupName,string message)
         {

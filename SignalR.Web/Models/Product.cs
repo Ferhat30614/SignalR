@@ -1,5 +1,5 @@
 ﻿namespace SignalR.Web.Models
 {
-    public record Product(int id,string name,decimal price);
+    public record Product(int Id,string Name,decimal Price);
     
 }
