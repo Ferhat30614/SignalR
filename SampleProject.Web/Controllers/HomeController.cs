@@ -7,7 +7,9 @@ using System.Numerics;
 
 namespace SampleProject.Web.Controllers
 {
-    public class HomeController(ILogger<HomeController> _logger,UserManager<IdentityUser> _userManager,SignInManager<IdentityUser> _signInManager) : Controller
+    public class HomeController(ILogger<HomeController> _logger,UserManager<IdentityUser> _userManager
+        ,SignInManager<IdentityUser> _signInManager
+        ,AppDbContext _context) : Controller
     {
        
 
@@ -76,9 +78,36 @@ namespace SampleProject.Web.Controllers
             //Refactoring(yeniden adlandırma) yaptığında otomatik güncellenir.
             //Yazım hatalarını compile - time’da fark eder.
         }
-        public IActionResult ProductList()
+        public async Task<IActionResult> ProductList()
         {
-            return View();      
+
+            var user = await _userManager.FindByEmailAsync("ferhat123.ftr@gmail.com");
+
+            if (_context.Products.Any(a=>a.UserId==user!.Id))
+            {
+                var products=_context.Products.Where(a => a.UserId == user!.Id).ToList();
+                return View(products);  
+                
+                
+            }
+
+
+            var productList = new List<Product>() {
+
+                new Product() { Name = "Car 1", Description = "Description 1", Price = 123, UserId = user!.Id },
+                new Product() { Name = "Car 2", Description = "Description 2", Price = 123, UserId = user!.Id },
+                new Product() { Name = "Car 3", Description = "Description 3", Price = 123, UserId = user!.Id },
+                new Product() { Name = "Car 4", Description = "Description 4", Price = 123, UserId = user!.Id },
+                new Product() { Name = "Car 5", Description = "Description 5", Price = 123, UserId = user!.Id },
+
+            };
+
+            _context.Products.AddRange(productList);
+            _context.SaveChanges(); 
+            
+
+
+            return View(productList);      
         }
 
         public IActionResult Privacy()

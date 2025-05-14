@@ -3,5 +3,45 @@
     ViewData["Title"] = "ProductList";
 }
 
-<h1>ProductList</h1>
+
+
+@model List<Product>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td>
+                    @item.Description
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
 
