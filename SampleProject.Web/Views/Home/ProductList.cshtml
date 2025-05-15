@@ -5,9 +5,60 @@
 
 
 
+@section Scripts{
+
+   <script>
+
+        $(document).ready(function(){
+
+
+            $("#btn-create-excel").click(function (){
+
+                $.ajax({
+
+                    url:"/Home/CreateExcel",
+                    type:"GET",
+                    dataType:"json",
+                    success: function(data){
+
+                        console.log(data);
+
+                        $(".toast-body").html("Excel oluşturma isteğiniz alındı tamamlandığında bilgilendirileceksiniz");
+                        // toast-body burada class oldundan . ile başlayarak yazdım... # ile değil
+                        // eğer class ise . ile eğer id ise # ile başlar....
+
+                        $("#liveToast").show();
+
+                        setTimeout(()=>{
+
+                            $("#liveToast").hide();
+
+                        },3000);
+
+                    },
+                    error: function(err){
+                        console.error(err);
+                    }
+
+
+                })
+
+            })
+
+
+
+        });
+
+   </script>
+
+}
+
+
 @model List<Product>
 
-
+    <p>
+        <a href="#" class="btn btn-primary" id="btn-create-excel"  >Create Excel</a>
+    </p>
 
 <table class="table">
     <thead>
