@@ -6,13 +6,13 @@ using System.Threading.Channels;
 namespace SampleProject.Web.Services
 {
     public class FileService(UserManager<IdentityUser> userManager
-        ,HttpContextAccessor httpContextAccessor
+        ,IHttpContextAccessor httpContextAccessor
         ,AppDbContext context
         ,Channel<(string,List<Product>)> channel 
         )
     {
 
-
+                                
         public async Task<bool> AddMessageToQueue()
         {
 

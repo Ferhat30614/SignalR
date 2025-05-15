@@ -2,12 +2,10 @@ using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SampleProject.Web.Models;
 using SampleProject.Web.Models.ViewModels;
 using SampleProject.Web.Services;
 using System.Diagnostics;
-using System.Numerics;
 
 namespace SampleProject.Web.Controllers
 {
@@ -46,11 +44,9 @@ namespace SampleProject.Web.Controllers
                 return View(model);
             }
 
-
-
-
             return RedirectToAction(nameof(Index));   
         }
+
         [HttpGet]
         public IActionResult SignUp()
         {
@@ -123,6 +119,7 @@ namespace SampleProject.Web.Controllers
             {
                 Status = await fileService.AddMessageToQueue()
             };
+            //burda isimsiz bir obje oluşturdum
 
             //ajaxla çağırdığımızdan burda json var
             return Json(response);  
