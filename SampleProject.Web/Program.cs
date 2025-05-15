@@ -1,12 +1,22 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SampleProject.Web.Models;
+using SampleProject.Web.Services;
+using System.Collections.Generic;
 using System.Threading.Channels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<FileService>();
+
+builder.Services.AddSingleton(Channel.CreateUnbounded<(string userId, List<Product> products)>()); 
+//burda birden fazla parametre oldundan gizli bir tuple ile ekledim 
+
+
+builder.Services.AddHttpContextAccessor();
+
 
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
@@ -16,8 +26,6 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
-
-builder.Services.AddSingleton(Channel.CreateUnbounded<(string userId, List<Product> products)>());
 
 var app = builder.Build();
 
