@@ -1,4 +1,5 @@
 ﻿
+using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.FileProviders;
@@ -32,7 +33,16 @@ namespace SampleProject.Web.BackgroundServices
                 var newExcelFilePath = Path.Combine(filesFolder.PhysicalPath,newExcelFileName);
 
                 var ds = new DataSet();
-                ds.Tables.Add();
+                ds.Tables.Add(GetTable("Product List", products));
+
+                var wb = new XLWorkbook();
+                wb.Worksheets.Add(ds);
+
+                await using var excelFileStream = new FileStream(newExcelFilePath,FileMode.Create);
+
+                wb.SaveAs(excelFileStream);
+
+
 
 
             }
