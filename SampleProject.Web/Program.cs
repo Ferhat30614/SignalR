@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using SampleProject.Web.BackgroundServices;
 using SampleProject.Web.Models;
 using SampleProject.Web.Services;
 using System.Collections.Generic;
@@ -18,6 +20,9 @@ builder.Services.AddSingleton(Channel.CreateUnbounded<(string userId, List<Produ
 builder.Services.AddHttpContextAccessor();
 
 
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
+
+builder.Services.AddHostedService<CreateExcelBackgroundService>();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
