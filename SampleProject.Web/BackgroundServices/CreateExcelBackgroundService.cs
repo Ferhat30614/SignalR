@@ -69,11 +69,5 @@ namespace SampleProject.Web.BackgroundServices
 
 
 
-
-
-
-
-
-
     }
 }

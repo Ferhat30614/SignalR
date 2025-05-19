@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using SampleProject.Web.BackgroundServices;
+using SampleProject.Web.Hubs;
 using SampleProject.Web.Models;
 using SampleProject.Web.Services;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ builder.Services.AddSingleton(Channel.CreateUnbounded<(string userId, List<Produ
 
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSignalR();  
 
 
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
@@ -48,6 +50,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.MapHub<AppHub>("/hub");
 
 app.MapControllerRoute(
     name: "default",
