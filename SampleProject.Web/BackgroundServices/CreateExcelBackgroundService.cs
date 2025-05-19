@@ -1,8 +1,8 @@
-﻿
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.FileProviders;
+using SampleProject.Web.Hubs;
 using SampleProject.Web.Models;
 using System.Data;
 using System.Threading.Channels;
@@ -21,7 +21,11 @@ namespace SampleProject.Web.BackgroundServices
             while (await channel.Reader.WaitToReadAsync(stoppingToken))
             {
 
+                await Task.Delay(4000);
+
                 var (userid, products) = await channel.Reader.ReadAsync(stoppingToken);
+
+
 
 
                 var wwwrootFolder = fileProvider.GetDirectoryContents("wwwroot");
@@ -41,6 +45,27 @@ namespace SampleProject.Web.BackgroundServices
                 await using var excelFileStream = new FileStream(newExcelFilePath,FileMode.Create);
 
                 wb.SaveAs(excelFileStream);
+
+
+
+                //hub
+
+                using (var scope = serviceProvider.CreateScope())
+                {
+
+                    // using bloğu sayesinde bu scope içindeki servisler (örneğin appHub) iş bittikten sonra dispose edilir.
+                    // Aslında sadece 'scope' nesnesi değil, onunla birlikte oluşturulan scoped servisler de temizlenir.
+                    var appHub = scope.ServiceProvider.GetRequiredService<IHubContext<AppHub>>();
+
+                    await appHub.Clients.User(userid).SendAsync("AlertCompleteFile",$"/files/{newExcelFileName}",stoppingToken);
+
+                    //burda ben 2. sırada argümanı gönderdim
+
+                }
+
+
+
+
 
 
 

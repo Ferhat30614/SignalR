@@ -6,7 +6,7 @@
 
     async function start() {
 
-        try {
+        try {   
 
             await connection.start().then(() => {
                 /*$("#connectionId").html(`connectionId : ${connection.connectionId}`);*/
