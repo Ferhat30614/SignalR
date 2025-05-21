@@ -46,9 +46,6 @@ namespace SampleProject.Web.BackgroundServices
                 wb.SaveAs(excelFileStream);
 
 
-                
-
-                await appHub.Clients.User(userid).SendAsync("AlertCompleteFile", $"/files/{newExcelFileName}", stoppingToken);
 
 
 
@@ -56,21 +53,25 @@ namespace SampleProject.Web.BackgroundServices
 
                 //hub
 
-                //using (var scope = serviceProvider.CreateScope())
-                //{
+                using (var scope = serviceProvider.CreateScope())
+                {
 
-                //    // using bloğu sayesinde bu scope içindeki servisler (örneğin appHub) iş bittikten sonra dispose edilir.
-                //    // Aslında sadece 'scope' nesnesi değil, onunla birlikte oluşturulan scoped servisler de temizlenir.
-                //    var appHub = scope.ServiceProvider.GetRequiredService<IHubContext<AppHub>>();
+                    // using bloğu sayesinde bu scope içindeki servisler (örneğin appHub) iş bittikten sonra dispose edilir.
+                    // Aslında sadece 'scope' nesnesi değil, onunla birlikte oluşturulan scoped servisler de temizlenir.
+                    var appHub = scope.ServiceProvider.GetRequiredService<IHubContext<AppHub>>();
 
-                //    await appHub.Clients.User(userid).SendAsync("AlertCompleteFile",$"/files/{newExcelFileName}",stoppingToken);
+                    //burda oluşturduğum scope nesnesiyle IHubContext e erişiyorum aslında IHubContext de singleton ama iserviceprovidere örnek olsun diye yazdım yoksa bu kod gerekli değil. IHubContext yerine scoped service kullanılcağı zaman bu şekilde erişilir...
 
-                //    //burda ben 2. sırada argümanı gönderdim
+                    await appHub.Clients.User(userid).SendAsync("AlertCompleteFile", $"/files/{newExcelFileName}", stoppingToken);
 
-                //    //using (...) bloğu bittiğinde scope.Dispose() çağrılır.
-                //    //Bu da scope içinde yaratılan tüm scoped servisleri(örneğin appHub) otomatik olarak temizler.
 
-                //}
+
+                    //burda ben 2. sırada argümanı gönderdim
+
+                    //using (...) bloğu bittiğinde scope.Dispose() çağrılır.
+                    //Bu da scope içinde yaratılan tüm scoped servisleri(örneğin appHub) otomatik olarak temizler.
+
+                }
 
             }
 
