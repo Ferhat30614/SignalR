@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();      
 
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +28,8 @@ app.MapHub<ExampleTypeSafeHub>("/exampleTypeSafeHub");
 app.UseRouting();
 
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",
