@@ -46,11 +46,6 @@ namespace SampleProject.Web.BackgroundServices
                 wb.SaveAs(excelFileStream);
 
 
-
-
-
-
-
                 //hub
 
                 using (var scope = serviceProvider.CreateScope())
