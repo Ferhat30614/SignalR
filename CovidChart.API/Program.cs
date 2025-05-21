@@ -1,3 +1,4 @@
+using CovidChart.API.Hubs;
 using CovidChart.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();  
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -29,5 +31,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<CovidHub>("/CovidHub");
 
 app.Run();
