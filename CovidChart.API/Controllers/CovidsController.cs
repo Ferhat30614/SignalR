@@ -25,17 +25,15 @@ namespace CovidChart.API.Controllers
 
             Random rnd = new Random();
 
-            Enumerable.Range(1, 10).ToList().ForEach(async x =>
+            Enumerable.Range(1, 10).ToList().ForEach( x =>
             {
 
                 foreach(ECity item in Enum.GetValues(typeof(ECity)))
                 {
                     Covid newCovid = new Covid() { City=item,Count=rnd.Next(100,1000),CovidDate=DateTime.Now.AddDays(x) };
-                    await _covidService.SaveCovid(newCovid);
+                     _covidService.SaveCovid(newCovid).Wait();
                     Thread.Sleep(1000);
                 }
-
-
 
             });
 
