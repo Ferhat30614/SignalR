@@ -14,8 +14,11 @@ namespace CovidChart.API.Controllers
         {
 
             await _covidService.SaveCovid(covid);
-            IQueryable queryable =  _covidService.GetList();
-            return Ok(queryable);   
+            //IQueryable queryable =  _covidService.GetList();
+
+             
+
+            return Ok(_covidService.GetCovidChartList());   
 
         }
         
