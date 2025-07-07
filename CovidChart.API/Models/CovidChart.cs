@@ -8,8 +8,5 @@
         }
         public string CovidDate { get; set; }
         public List<int> Counts { get; set; }
-
-
-
     }
 }

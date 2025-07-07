@@ -20,7 +20,7 @@ namespace CovidChart.API.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> InitializeCovid() 
+        public IActionResult InitializeCovid() 
         { 
 
             Random rnd = new Random();
