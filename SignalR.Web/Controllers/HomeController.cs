@@ -25,6 +25,12 @@ namespace SignalR.Web.Controllers
          {
             return View();
          }
+
+        public IActionResult Covid19Show()
+        {
+            return View();
+        }
+
         public IActionResult APIHubContextExample()
         {
             return View();

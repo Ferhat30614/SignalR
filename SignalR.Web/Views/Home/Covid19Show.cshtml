@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Covid19Show";
+}
+
+<h1>Covid19Show</h1>
+
+
+@section Scripts
+{
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+         const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7035/CovidHub")
+         .build();
+
+
+
+
+
+         connection.start().then(() => {
+               connection.invoke("GetCovidList");
+         }).catch((err)=>{
+                console.log(err);
+         });
+
+
+         connection.on("ReceiveCovidList",(covidList)=>{
+                
+             console.log(covidList);
+
+         });
+
+
+         })
+    
+    
+    </script>
+
+
+}
